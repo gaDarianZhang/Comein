@@ -1,0 +1,30 @@
+{
+  "id": "2522691",
+  "name": "comein",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1061047",
+      "name": "clock",
+      "font_class": "clock",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "5634503",
+      "name": "user-friends",
+      "font_class": "user-friends",
+      "unicode": "f133",
+      "unicode_decimal": 61747
+    },
+    {
+      "icon_id": "7876854",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    }
+  ]
+}

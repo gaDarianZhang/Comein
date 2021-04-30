@@ -1,17 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size:100px">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<title>平安成电智慧通行</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" /> -->
+  <link rel="stylesheet" href="./font/iconfont.css">
+  <link rel="stylesheet" href="./minireset.css">
+  <script type="text/javascript">
+    window.onresize = function () {
+      let layWidth = window.innerWidth;
+      console.log(layWidth);
+      document.documentElement.style.fontSize = 100 * layWidth / 750 + "px";
+    }
+    let layWidth = window.innerWidth;
+    console.log(layWidth);
+    document.documentElement.style.fontSize = 100 * layWidth / 750 + "px";
+  </script>
+  <title>平安成电智慧通行</title>
+  <style>
+
+    .head{
+      padding: 0.6rem 0.3rem 0.3rem;
+    }
+    .content{
+      padding: 0.1rem 0.3rem;
+      font-size: 0.5rem;
+    }
+    .pad {
+      width: 100%;
+      height: 0.4rem;
+    }
+    .message{
+      color: #017F02;
+      font-size: 0.45rem;
+      font-weight: 550;
+    }
+    hr{
+      border-color: rgba(248,248,248,.3);
+    }
+    
+    .content li{
+      display: flex;
+      justify-content: space-between;
+      margin: 0.06rem 0 0.3rem;
+    }
+    .content li span::before{
+      display: inline-block;
+      width: 0.475rem;
+      margin-right: 0.2rem;
+      text-align: center;
+      font-size: 0.38rem;
+      color: #757575;
+
+    }
+    .content li span{
+      padding-top: 0.1rem;
+      font-size: 0.29rem;
+      color: #424242;
+    }
+    .content li div{
+      color: black;
+      font-size: 0.45rem;
+      font-weight: bold;
+    }
+    .time{
+      position: relative;
+      width: 50%;
+      overflow: hidden;
+    }
+    .time div{
+      position: absolute; 
+      white-space: nowrap; 
+    }
+    .time>div span{
+      display: inline-block;
+      color: #2CC9B0;
+      font-size: 0.34rem;
+    }
+  </style>
 </head>
+
 <body>
-<h1>test</h1>
-<h2>test2</h2>
+  <div id="app">
+    <div class="head">
+      <div class="pad"></div>
+      <h1 class="message">研究生用户，入校授权有效！</h1>
+      <div class="pad"></div>
+    </div>
+    <hr>
+    <div class="content">
+      <ul>
+        <li>
+            <span class="iconfont icon-user">用户姓名</span>
+            <div>张洪彬</div>
+        </li>
+        <li>
+            <span class="iconfont icon-user-friends">登记类型</span>
+            <div>研究生（硕士）</div>
+        </li>
+        <li>
+            <span class="iconfont icon-clock">登记时间</span>
+            <div class="time">
+              <div>
+                <span>2021-04-30 13:11:06</span>
+                <span>2021-04-30 13:11:06</span>
+              </div>
+            </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  
+  <script type="text/javascript">
+    let time = new Date();
+    console.log(time);
+    let year = time.getFullYear();
+    // console.log(year);
+    let month = time.getMonth()+1;
+    month = month>=10?month:"0"+month.toString();
+    // console.log(month);
+    let day = time.getDate();
+    day = day>=10?day:"0"+day.toString();
+    // console.log(day);
+    let hour = time.getHours();
+    hour = hour>=10?hour:"0"+hour.toString();
+    // console.log(hour);
+    let min = time.getMinutes();
+    min = min>=10?min:"0"+min.toString();
+    // console.log(min);
+    let sec = time.getSeconds();
+    sec = sec>=10?sec:"0"+sec.toString();
+    
+    let timeNow = `${year}-${month}-${day} ${hour}:${min}:${sec}`;
+    let timeNodes = document.querySelectorAll(".time>div span");
+    let timeBox = document.querySelector(".time>div");
+    let timeBoxWidth = timeBox.clientWidth;
+    let left = timeBox.offsetLeft;
+    let step = -timeBoxWidth/2/(3000/10);
+    timeNodes[0].innerHTML = timeNow;
+    timeNodes[1].innerHTML = timeNow;
+    setInterval(()=>{
+      left += step;
+      if(left<= -timeBoxWidth/2){
+        left = 0;
+      }
+      timeBox.style.left = left+"px";
+    },10)
+  </script>
 </body>
+
 </html>
