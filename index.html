@@ -23,7 +23,13 @@
   </script>
   <title>平安成电智慧通行</title>
   <style>
-
+    body{
+      background-color: #FAFAFA;
+    }
+    #app{
+      background-color: white;
+      padding-bottom: 0.15rem;
+    }
     .head{
       padding: 0.6rem 0.3rem 0.3rem;
     }
@@ -82,6 +88,26 @@
       color: #2CC9B0;
       font-size: 0.34rem;
     }
+    button{
+      display: block;
+      padding: 0.2rem 0.3rem;
+      background-color: #01C4A4;
+      color: white;
+      font-size: 0.3rem;
+      font-weight: lighter;
+      border: none;
+      border-radius: 0.05rem;
+      box-shadow: 0.03rem 0.03rem 0.05rem rgba(0,0,0,.3);
+      margin-top: 0.3rem;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    img{
+      display: block;
+      margin: 0.7rem auto 0;
+      width: 1rem;
+      height: 1rem;
+    }
   </style>
 </head>
 
@@ -114,7 +140,8 @@
         </li>
       </ul>
     </div>
-
+    <button>前往个人二维码</button>
+    <img src="./comein.png" alt="uestc">
   </div>
   
   <script type="text/javascript">
@@ -142,7 +169,7 @@
     let timeBox = document.querySelector(".time>div");
     let timeBoxWidth = timeBox.clientWidth;
     let left = timeBox.offsetLeft;
-    let step = -timeBoxWidth/2/(3000/10);
+    let step = -timeBoxWidth/2/(4000/10);
     timeNodes[0].innerHTML = timeNow;
     timeNodes[1].innerHTML = timeNow;
     setInterval(()=>{
