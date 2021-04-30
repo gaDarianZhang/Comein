@@ -88,7 +88,7 @@
       color: #2CC9B0;
       font-size: 0.34rem;
     }
-    button{
+    #app button{
       display: block;
       padding: 0.2rem 0.3rem;
       background-color: #01C4A4;
@@ -103,11 +103,45 @@
       margin-left: 50%;
       transform: translateX(-50%);
     }
-    img{
+    #app img{
       display: block;
       margin: 0.7rem auto 0;
       width: 1rem;
       height: 1rem;
+    }
+
+    #pre{
+      margin-top: 3rem;
+    }
+    #pre button{
+      width: 1.2rem;
+      height: 0.7rem;
+      background-color: cadetblue;
+      border: none;
+      outline: none;
+    }
+    #pre button:first-child{
+      margin-left: 2.3rem;
+    }
+    #pre .warn{
+      border: 2px dotted red;
+      background-color: rgba(202, 37, 37, 0.3);
+      font-size: 0.3rem;
+    }
+    #pre ul{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #pre ul li{
+      width: 1.5rem;
+      height: 0.7rem;
+      /* border: 1px solid red; */
+      padding: 0.1rem;
+      background-clip: content-box;
+      background-color: sandybrown;
+      text-align: center;
+      line-height: 0.7rem;
+      font-size: 0.3rem;
     }
   </style>
 </head>
@@ -144,42 +178,53 @@
     <button>前往个人二维码</button>
     <img src="./comein.png" alt="uestc">
   </div>
+  <div id="pre">
+    <button id="enter">进校</button>
+    <button id="leave">出校</button>
+    <div class="pad"></div>
+    <div class="warn">Please choose one name quickly!!</div>
+    <div class="pad"></div>
+    <ul class="names">
+      
+    </ul>
+  </div>
   
   <script type="text/javascript">
-    let nameList = ["王硕","黄婉晴","许丽君","张美美","赵曼","黄清","李蕾","张袁媛","李运欢","赵丽颖","金思佳"];
-    let name = nameList[Math.floor(Math.random()*10)];
-    console.log(name);
-    let nameNode = document.querySelectorAll("ul>li>div")[0];
-    nameNode.innerHTML = name;
-
-
-    let time = new Date();
-    console.log(time);
-    let year = time.getFullYear();
-    // console.log(year);
-    let month = time.getMonth()+1;
-    month = month>=10?month:"0"+month.toString();
-    // console.log(month);
-    let day = time.getDate();
-    day = day>=10?day:"0"+day.toString();
-    // console.log(day);
-    let hour = time.getHours();
-    hour = hour>=10?hour:"0"+hour.toString();
-    // console.log(hour);
-    let min = time.getMinutes();
-    min = min>=10?min:"0"+min.toString();
-    // console.log(min);
-    let sec = time.getSeconds();
-    sec = sec>=10?sec:"0"+sec.toString();
-    
-    let timeNow = `${year}-${month}-${day} ${hour}:${min}:${sec}`;
+    let nameList = ["王硕","黄婉晴","许丽君","张美美","赵曼","黄清","李蕾","张袁媛","李运欢","赵丽颖",
+                    "徐文东","张文建","张珂栗","苏豪","庞永健","刘阳辉","李海磊","李希萌","戴山","庞永健"];
+    let name = nameList[3];
+    let nameNode = document.querySelectorAll("#app ul>li>div")[0];
+    let app = document.getElementById("app");
+    let pre = document.getElementById("pre");
+    let nameListNode = document.querySelector(".names");
     let timeNodes = document.querySelectorAll(".time>div span");
     let timeBox = document.querySelector(".time>div");
+    let enterButton = document.querySelector("#enter");
+    let leaveButton = document.querySelector("#leave");
+    let titleMessageNode = document.querySelector("#app .message");
+    let go = 1;//1进校，0出校
+    let where = false;//是否选择了进出校
+    let who = false;//是否选择了人名
+    // 设置时间
+    let time = new Date();
+    let year = time.getFullYear();
+    let month = time.getMonth()+1;
+    month = month>=10?month:"0"+month.toString();
+    let day = time.getDate();
+    day = day>=10?day:"0"+day.toString();
+    let hour = time.getHours();
+    hour = hour>=10?hour:"0"+hour.toString();
+    let min = time.getMinutes();
+    min = min>=10?min:"0"+min.toString();
+    let sec = time.getSeconds();
+    sec = sec>=10?sec:"0"+sec.toString();
+    let timeNow = `${year}-${month}-${day} ${hour}:${min}:${sec}`;
     let timeBoxWidth = timeBox.clientWidth;
     let left = timeBox.offsetLeft;
     let step = -timeBoxWidth/2/(4000/10);
     timeNodes[0].innerHTML = timeNow;
     timeNodes[1].innerHTML = timeNow;
+
     setInterval(()=>{
       left += step;
       if(left<= -timeBoxWidth/2){
@@ -187,6 +232,65 @@
       }
       timeBox.style.left = left+"px";
     },10)
+
+
+    app.style.display = "none";
+    
+    for(var i = 0; i < nameList.length; i++){
+      let na = document.createElement("li");
+      na.innerText = nameList[i];
+      na.setAttribute("class","name"+i)
+      // console.log(na);
+      nameListNode.appendChild(na);
+    }
+
+    nameListNode.addEventListener("click",(event)=>{
+      // console.log(event.target);
+      let index = Number(event.target.className.slice(4,));
+      name = nameList[index];
+      who = true;
+      letsGo();
+    })
+    enterButton.addEventListener("click",goWhere);
+    leaveButton.addEventListener("click",goWhere);
+
+    function goWhere(){
+      if (this.id==="enter") {
+        go = 1;
+      }else{
+        go = 0;
+      }
+      enterButton.style.backgroundColor = "cadetblue";
+      leaveButton.style.backgroundColor = "cadetblue";
+      this.style.backgroundColor = "red";
+      where = true;
+      letsGo();
+    }
+    function letsGo() {
+      if (who&&where) {
+        nameNode.innerHTML = name;
+        if (go===1) {
+          titleMessageNode.innerText = "研究生用户，入校授权有效！";
+        }else{
+          titleMessageNode.innerText = "研究生用户，出校登记成功！";
+        }
+        pre.style.display = "none";
+        app.style.display = "block";
+      }
+      
+    }
+    // let name = nameList[3];
+    // 
+    // nameNode.addEventListener("click",()=>{
+    //   name = nameList[Math.floor(Math.random()*10)];
+    //   console.log(name);
+    //   nameNode.innerHTML = name;
+    // })
+    
+    
+    
+    
+    
   </script>
 </body>
 
