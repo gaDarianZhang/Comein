@@ -146,6 +146,13 @@
   </div>
   
   <script type="text/javascript">
+    let nameList = ["王硕","黄婉晴","许丽君","张美美","赵曼","黄清","李蕾","张袁媛","李运欢","赵丽颖","金思佳"];
+    let name = nameList[Math.floor(Math.random()*10)];
+    console.log(name);
+    let nameNode = document.querySelectorAll("ul>li>div")[0];
+    nameNode.innerHTML = name;
+
+
     let time = new Date();
     console.log(time);
     let year = time.getFullYear();
